@@ -1,0 +1,1 @@
+﻿Scaffold-DbContext "Data Source=localhost;Initial Catalog=master;User ID=sa;Password=Bruno1234;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
