@@ -15,24 +15,23 @@ namespace WebApplication1.Models
         {
         }
 
-        public virtual DbSet<Author> Author { get; set; }
-        public virtual DbSet<Book> Book { get; set; }
-        public virtual DbSet<BookAuthor> BookAuthor { get; set; }
-        public virtual DbSet<Job> Job { get; set; }
-        public virtual DbSet<Paginas> Paginas { get; set; }
-        public virtual DbSet<Publisher> Publisher { get; set; }
-        public virtual DbSet<RefreshToken> RefreshToken { get; set; }
-        public virtual DbSet<Role> Role { get; set; }
-        public virtual DbSet<Sale> Sale { get; set; }
-        public virtual DbSet<Store> Store { get; set; }
-        public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<Author> Authors { get; set; }
+        public virtual DbSet<Book> Books { get; set; }
+        public virtual DbSet<BookAuthor> BookAuthors { get; set; }
+        public virtual DbSet<Job> Jobs { get; set; }
+        public virtual DbSet<Pagina> Paginas { get; set; }
+        public virtual DbSet<Publisher> Publishers { get; set; }
+        public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<Sale> Sales { get; set; }
+        public virtual DbSet<Store> Stores { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=master;User ID=sa;Password=Bruno1234;");
+                optionsBuilder.UseSqlServer("Name=Default");
             }
         }
 
@@ -40,6 +39,8 @@ namespace WebApplication1.Models
         {
             modelBuilder.Entity<Author>(entity =>
             {
+                entity.ToTable("Author");
+
                 entity.Property(e => e.AuthorId).HasColumnName("author_id");
 
                 entity.Property(e => e.Address)
@@ -92,6 +93,8 @@ namespace WebApplication1.Models
 
             modelBuilder.Entity<Book>(entity =>
             {
+                entity.ToTable("Book");
+
                 entity.Property(e => e.BookId).HasColumnName("book_id");
 
                 entity.Property(e => e.Advance)
@@ -133,7 +136,7 @@ namespace WebApplication1.Models
                 entity.Property(e => e.YtdSales).HasColumnName("ytd_sales");
 
                 entity.HasOne(d => d.Pub)
-                    .WithMany(p => p.Book)
+                    .WithMany(p => p.Books)
                     .HasForeignKey(d => d.PubId)
                     .HasConstraintName("FK__Book__pub_id__3F6663D5");
             });
@@ -141,6 +144,8 @@ namespace WebApplication1.Models
             modelBuilder.Entity<BookAuthor>(entity =>
             {
                 entity.HasKey(e => new { e.AuthorId, e.BookId });
+
+                entity.ToTable("BookAuthor");
 
                 entity.Property(e => e.AuthorId).HasColumnName("author_id");
 
@@ -151,18 +156,20 @@ namespace WebApplication1.Models
                 entity.Property(e => e.RoyalityPercentage).HasColumnName("royality_percentage");
 
                 entity.HasOne(d => d.Author)
-                    .WithMany(p => p.BookAuthor)
+                    .WithMany(p => p.BookAuthors)
                     .HasForeignKey(d => d.AuthorId)
                     .HasConstraintName("FK__BookAutho__autho__405A880E");
 
                 entity.HasOne(d => d.Book)
-                    .WithMany(p => p.BookAuthor)
+                    .WithMany(p => p.BookAuthors)
                     .HasForeignKey(d => d.BookId)
                     .HasConstraintName("FK__BookAutho__book___414EAC47");
             });
 
             modelBuilder.Entity<Job>(entity =>
             {
+                entity.ToTable("Job");
+
                 entity.Property(e => e.JobId).HasColumnName("job_id");
 
                 entity.Property(e => e.JobDesc)
@@ -173,7 +180,7 @@ namespace WebApplication1.Models
                     .HasDefaultValueSql("('New Position - title not formalized yet')");
             });
 
-            modelBuilder.Entity<Paginas>(entity =>
+            modelBuilder.Entity<Pagina>(entity =>
             {
                 entity.ToTable("paginas");
 
@@ -199,6 +206,8 @@ namespace WebApplication1.Models
             {
                 entity.HasKey(e => e.PubId)
                     .HasName("PK__Publishe__2515F222661E766B");
+
+                entity.ToTable("Publisher");
 
                 entity.Property(e => e.PubId).HasColumnName("pub_id");
 
@@ -229,6 +238,8 @@ namespace WebApplication1.Models
             {
                 entity.HasKey(e => e.TokenId);
 
+                entity.ToTable("RefreshToken");
+
                 entity.Property(e => e.TokenId).HasColumnName("token_id");
 
                 entity.Property(e => e.ExpiryDate)
@@ -244,13 +255,15 @@ namespace WebApplication1.Models
                 entity.Property(e => e.UserId).HasColumnName("user_id");
 
                 entity.HasOne(d => d.User)
-                    .WithMany(p => p.RefreshToken)
+                    .WithMany(p => p.RefreshTokens)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("FK__RefreshTo__user___4242D080");
             });
 
             modelBuilder.Entity<Role>(entity =>
             {
+                entity.ToTable("Role");
+
                 entity.Property(e => e.RoleId).HasColumnName("role_id");
 
                 entity.Property(e => e.RoleDesc)
@@ -263,6 +276,8 @@ namespace WebApplication1.Models
 
             modelBuilder.Entity<Sale>(entity =>
             {
+                entity.ToTable("Sale");
+
                 entity.Property(e => e.SaleId).HasColumnName("sale_id");
 
                 entity.Property(e => e.BookId).HasColumnName("book_id");
@@ -293,18 +308,20 @@ namespace WebApplication1.Models
                     .IsFixedLength();
 
                 entity.HasOne(d => d.Book)
-                    .WithMany(p => p.Sale)
+                    .WithMany(p => p.Sales)
                     .HasForeignKey(d => d.BookId)
                     .HasConstraintName("FK__Sale__book_id__4336F4B9");
 
                 entity.HasOne(d => d.Store)
-                    .WithMany(p => p.Sale)
+                    .WithMany(p => p.Sales)
                     .HasForeignKey(d => d.StoreId)
                     .HasConstraintName("FK__Sale__store_id__442B18F2");
             });
 
             modelBuilder.Entity<Store>(entity =>
             {
+                entity.ToTable("Store");
+
                 entity.Property(e => e.StoreId)
                     .HasColumnName("store_id")
                     .HasMaxLength(4)
@@ -344,6 +361,8 @@ namespace WebApplication1.Models
                 entity.HasKey(e => e.UserId)
                     .HasName("PK_user_id_2")
                     .IsClustered(false);
+
+                entity.ToTable("User");
 
                 entity.Property(e => e.UserId).HasColumnName("user_id");
 
@@ -395,12 +414,12 @@ namespace WebApplication1.Models
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.Pub)
-                    .WithMany(p => p.User)
+                    .WithMany(p => p.Users)
                     .HasForeignKey(d => d.PubId)
                     .HasConstraintName("FK__User__pub_id__46136164");
 
                 entity.HasOne(d => d.Role)
-                    .WithMany(p => p.User)
+                    .WithMany(p => p.Users)
                     .HasForeignKey(d => d.RoleId)
                     .HasConstraintName("FK__User__role_id__451F3D2B");
             });

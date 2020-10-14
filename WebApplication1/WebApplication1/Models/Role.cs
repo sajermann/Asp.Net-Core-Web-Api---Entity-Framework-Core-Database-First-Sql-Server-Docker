@@ -7,12 +7,12 @@ namespace WebApplication1.Models
     {
         public Role()
         {
-            User = new HashSet<User>();
+            Users = new HashSet<User>();
         }
 
         public short RoleId { get; set; }
         public string RoleDesc { get; set; }
 
-        public virtual ICollection<User> User { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 }

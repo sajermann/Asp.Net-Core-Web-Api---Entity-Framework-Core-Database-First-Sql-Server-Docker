@@ -7,7 +7,7 @@ namespace WebApplication1.Models
     {
         public Store()
         {
-            Sale = new HashSet<Sale>();
+            Sales = new HashSet<Sale>();
         }
 
         public string StoreId { get; set; }
@@ -17,6 +17,6 @@ namespace WebApplication1.Models
         public string State { get; set; }
         public string Zip { get; set; }
 
-        public virtual ICollection<Sale> Sale { get; set; }
+        public virtual ICollection<Sale> Sales { get; set; }
     }
 }

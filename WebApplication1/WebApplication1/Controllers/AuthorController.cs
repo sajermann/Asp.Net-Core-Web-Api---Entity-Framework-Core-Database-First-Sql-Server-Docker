@@ -29,7 +29,7 @@ namespace WebApplication1.Controllers
             //context.Author.Add(author);
             //context.SaveChanges();
 
-            return context.Author.Where(author => author.FirstName == "Bruno").ToList();
+            return context.Authors.Where(author => author.FirstName == "Bruno").ToList();
         }
     }
 }

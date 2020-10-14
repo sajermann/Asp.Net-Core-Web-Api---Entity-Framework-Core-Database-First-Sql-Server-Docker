@@ -7,7 +7,7 @@ namespace WebApplication1.Models
     {
         public User()
         {
-            RefreshToken = new HashSet<RefreshToken>();
+            RefreshTokens = new HashSet<RefreshToken>();
         }
 
         public int UserId { get; set; }
@@ -23,6 +23,6 @@ namespace WebApplication1.Models
 
         public virtual Publisher Pub { get; set; }
         public virtual Role Role { get; set; }
-        public virtual ICollection<RefreshToken> RefreshToken { get; set; }
+        public virtual ICollection<RefreshToken> RefreshTokens { get; set; }
     }
 }
