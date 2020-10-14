@@ -1,5 +1,14 @@
 ﻿//Usando Configuração do BD inline
 Scaffold-DbContext "Data Source=localhost;Initial Catalog=master;User ID=sa;Password=Bruno1234;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -force
 
-//Usando Configuração do BD no appsetings.json
+//Usando Configuração do BD no appsetings.json (Fica com Erro no Context para buscar a string de conexão, não sei o motivo ainda)
+//Deu Certo para tal, no startup.cs tem que ter:
+public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddControllers();
+            services.AddDbContext<masterContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("Default")));
+        }
+
+
 Scaffold-DbContext -Connection Name=Default Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -force
