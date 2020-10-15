@@ -39,6 +39,25 @@ namespace WebApplication1.Controllers
             }
 
             return publisher;
+        } 
+        
+        // GET: api/Publishers/5
+        [HttpGet("GetPublisherDetails/{id}")]
+        public async Task<ActionResult<Publisher>> GetPublisherDetails(int id)
+        {
+            var publisher = _context.Publishers
+                            .Include(pub=>pub.Books)
+                                .ThenInclude(book=> book.Sales)
+                            .Include(pub => pub.Users)
+                                
+                            .Where(pub => pub.PubId == id).FirstOrDefault();
+
+            if (publisher == null)
+            {
+                return NotFound();
+            }
+
+            return publisher;
         }
 
         // PUT: api/Publishers/5

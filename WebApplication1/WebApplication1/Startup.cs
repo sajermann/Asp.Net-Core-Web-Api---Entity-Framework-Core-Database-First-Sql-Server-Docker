@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using WebApplication1.Models;
 
 namespace WebApplication1
@@ -27,6 +28,11 @@ namespace WebApplication1
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddMvc(option => option.EnableEndpointRouting = false)
+               .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+               .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+
             services.AddDbContext<masterContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("Default")));
         }

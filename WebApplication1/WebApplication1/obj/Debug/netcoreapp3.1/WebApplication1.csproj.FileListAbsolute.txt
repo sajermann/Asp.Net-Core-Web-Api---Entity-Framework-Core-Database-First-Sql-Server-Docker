@@ -215,3 +215,6 @@ E:\Programação\Github\Asp.Net Core Web Api + Entity Framework Core Database Fi
 E:\Programação\Github\Asp.Net Core Web Api + Entity Framework Core Database First Sql Server Docker\WebApplication1\WebApplication1\obj\Debug\netcoreapp3.1\WebApplication1.csproj.CoreCompileInputs.cache
 E:\Programação\Github\Asp.Net Core Web Api + Entity Framework Core Database First Sql Server Docker\WebApplication1\WebApplication1\obj\Debug\netcoreapp3.1\WebApplication1.MvcApplicationPartsAssemblyInfo.cache
 E:\Programação\Github\Asp.Net Core Web Api + Entity Framework Core Database First Sql Server Docker\WebApplication1\WebApplication1\obj\Debug\netcoreapp3.1\EFCorePluralizer.cs
+E:\Programação\Github\Asp.Net Core Web Api + Entity Framework Core Database First Sql Server Docker\WebApplication1\WebApplication1\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
+E:\Programação\Github\Asp.Net Core Web Api + Entity Framework Core Database First Sql Server Docker\WebApplication1\WebApplication1\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+E:\Programação\Github\Asp.Net Core Web Api + Entity Framework Core Database First Sql Server Docker\WebApplication1\WebApplication1\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
