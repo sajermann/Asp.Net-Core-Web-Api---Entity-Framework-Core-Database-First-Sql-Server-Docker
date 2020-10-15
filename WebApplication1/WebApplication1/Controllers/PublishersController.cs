@@ -45,12 +45,32 @@ namespace WebApplication1.Controllers
         [HttpGet("GetPublisherDetails/{id}")]
         public async Task<ActionResult<Publisher>> GetPublisherDetails(int id)
         {
-            var publisher = _context.Publishers
-                            .Include(pub=>pub.Books)
-                                .ThenInclude(book=> book.Sales)
-                            .Include(pub => pub.Users)
-                                
-                            .Where(pub => pub.PubId == id).FirstOrDefault();
+            ////Eager Loading
+            //var publisher = _context.Publishers
+            //                .Include(pub=>pub.Books)
+            //                    .ThenInclude(book=> book.Sales)
+            //                .Include(pub => pub.Users)
+
+            //                .Where(pub => pub.PubId == id).FirstOrDefault();
+
+            //Explicit Loading
+            var publisher = await _context.Publishers.SingleAsync(publisher => publisher.PubId == id);
+            _context.Entry(publisher)
+                .Collection(pub => pub.Users)
+                .Query()
+                .Where(user => user.EmailAddress.Contains("Karin"))
+                .Load();
+            _context.Entry(publisher)
+                .Collection(pub => pub.Books)
+                .Query()
+                .Include(book=>book.Sales)
+                .Load();
+
+            var user = await _context.Users.SingleAsync(usr => usr.UserId == 1);
+
+            _context.Entry(user)
+                .Reference(usr => usr.Role)
+                .Load();
 
             if (publisher == null)
             {
