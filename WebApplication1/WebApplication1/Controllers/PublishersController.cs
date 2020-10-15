@@ -60,6 +60,46 @@ namespace WebApplication1.Controllers
             return publisher;
         }
 
+        // GET: api/Publishers/5
+        [HttpGet("PostPublisherDetails/")]
+        public async Task<ActionResult<Publisher>> PostPublisherDetails()
+        {
+            var publisher = new Publisher();
+
+            publisher.PublisherName = "Bruno Sajermann";
+            publisher.City = "Poá";
+            publisher.State = "SP";
+            publisher.Country = "BRA";
+
+            Book book1 = new Book();
+            book1.Title = "Good night Moon - 1";
+            book1.PublishedDate = DateTime.Now;
+
+            Book book2 = new Book();
+            book2.Title = "Good night Moon - 2";
+            book2.PublishedDate = DateTime.Now;
+
+            publisher.Books.Add(book1);
+            publisher.Books.Add(book2);
+
+            _context.Publishers.Add(publisher);
+            _context.SaveChanges();
+
+            var publishers = _context.Publishers
+                            .Include(pub => pub.Books)
+                                .ThenInclude(book => book.Sales)
+                            .Include(pub => pub.Users)
+
+                            .Where(pub => pub.PubId == publisher.PubId).FirstOrDefault();
+
+            if (publisher == null)
+            {
+                return NotFound();
+            }
+
+            return publisher;
+        }
+
         // PUT: api/Publishers/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
