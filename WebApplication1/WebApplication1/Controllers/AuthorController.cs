@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-    [ApiController]
+    [Authorize]    
     [Route("[controller]")]
+    [ApiController]
     public class AuthorController : ControllerBase
     {
         masterContext context = new masterContext();
